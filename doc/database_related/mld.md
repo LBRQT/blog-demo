@@ -1,7 +1,7 @@
 # MLD
 
 ---
-## Legende
+## Légende
 
 <span style="color:lightgreen"> Table </span>
 <span style="color:lightblue"> Primary Key </span>
