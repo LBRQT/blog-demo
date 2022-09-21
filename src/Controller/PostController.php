@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Form\PostType;
+use App\Form\CommentType;
 use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
 use DateTimeImmutable;
@@ -18,13 +19,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class PostController extends AbstractController
 {
 
+    
 
     #[Route('/{id}', name:'show', methods:['GET'], requirements:['id' => '\d+'])]
     public function show($id, PostRepository $postRepository, CommentRepository $commentRepository): Response
     {
         $post= $postRepository->find($id);
 
-        $comments= $commentRepository->findBy(['post' => $post->getId()]) === null;
+        $comments= $commentRepository->findBy(['post' => $post->getId()]);
          
         return $this->render('post/index.html.twig', [
             'post' => $post,

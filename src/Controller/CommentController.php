@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Entity\Post;
+use App\Form\CommentType;
 use App\Repository\CommentRepository;
+use App\Repository\PostRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,15 +15,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+#[Route('/comment', name:'comment_')]
 class CommentController extends AbstractController
 {
-    #[Route('/add', name:'add', methods:['GET', 'POST'])]
-    public function add(UserInterface $user, Request $request, EntityManagerInterface $em){
+    #[Route('/{postid}/add', name:'add', methods:['GET', 'POST'])]
+    public function add(PostRepository $post, $postid, UserInterface $user, Request $request, EntityManagerInterface $em){
     
         // Verify if user is connected
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $newComment = new Comment();
+
+        $newComment->setPost($post->find($postid));
 
         // Create form with the template we configured in \Form\PostType
         // we target our new post
@@ -44,7 +49,7 @@ class CommentController extends AbstractController
             $em->flush($newComment);
 
             // Redirect to homepage
-            return $this->redirectToRoute('home', ['Commentaire créé'], Response::HTTP_CREATED);
+            return $this->redirectToRoute('post_show', ['id' => $postid], Response::HTTP_CREATED);
         }
 
         // The way to the form
@@ -71,7 +76,7 @@ class CommentController extends AbstractController
         }
 
         // We get the comment from the annotation
-        $form = $this->createForm(commentType::class, $comment);
+        $form = $this->createForm(CommentType::class, $comment);
         
         // We handle the request when sent
         $form->handleRequest($request);
@@ -91,7 +96,7 @@ class CommentController extends AbstractController
     }
 
     #[Route('/{id}/delete', name:'delete', methods:['GET','DELETE'])]
-    public function delete(comment $comment, EntityManagerInterface $em)
+    public function delete(comment $comment, EntityManagerInterface $em, UserInterface $user)
     {
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
