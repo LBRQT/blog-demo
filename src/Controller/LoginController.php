@@ -24,4 +24,9 @@ class LoginController extends AbstractController
             'error'         => $error,
         ]);
     }
+
+    #[Route('/logout', name:'app_logout', methods:['GET'])]
+    public function logout(){
+      // It will never been called, so it can be blank
+    }
 }

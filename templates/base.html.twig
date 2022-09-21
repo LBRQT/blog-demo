@@ -15,15 +15,21 @@
         {% endblock %}
     </head>
     <body>
-        <header class="d-flex justify-content-between w-100 p-2">
-            <h1>Bonsoir</h1>
+        <header class="d-flex justify-content-between w-100 p-3 border-bottom">
+            <h1>Blog Demo</h1>
             <div>
+            {% if is_granted("ROLE_USER") %}
+            <div class="d-flex mt-2">
+                <p class="p-2"> {{ app.user.username }}</p>
+                <a href="{{ path("app_logout") }}"><button class="btn btn-danger">déconnexion</button></a>
+            </div>
+            {% else %}
                 <a href="{{ path("app_login") }}"><button class="btn btn-primary">Connexion</button></a>
                 <a href="{{path("app_user_new")}}"><button class="btn btn-outline-primary">S'inscrire</button></a>
+            {% endif %}
             </div>
         </header>
         
         {% block body %}{% endblock %}
-        <footer> Made with <3 by Boris et Louise </footer>
     </body>
 </html>
