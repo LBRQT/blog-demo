@@ -15,8 +15,6 @@ class MainController extends AbstractController
     public function show(PostRepository $postRepository, UserRepository $userRepository): Response
     {
         $posts = $postRepository->findAll();
-
-        dump($posts);
         return $this->render('main/home.html.twig', [
             'posts' => $posts
         ]);

@@ -110,7 +110,7 @@ class PostController extends AbstractController
     }
 
     #[Route('/{id}/delete', name:'delete', methods:['GET','DELETE'])]
-    public function delete(Post $post, EntityManagerInterface $em)
+    public function delete(UserInterface $user, Post $post, EntityManagerInterface $em)
     {
 
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');

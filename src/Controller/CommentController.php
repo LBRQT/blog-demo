@@ -63,7 +63,7 @@ class CommentController extends AbstractController
      * Edit a comment
      * Need to be connected and owner of the said comment
      */
-    #[Route('/{id}/edit', name:'edit', methods:['GET', 'comment'])]
+    #[Route('/{id}/edit', name:'edit', methods:['GET', 'POST'])]
     public function edit(UserInterface $user , comment $comment, EntityManagerInterface $em, Request $request)
     {
         // Check if we are connected
