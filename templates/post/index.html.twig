@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+<a href="{{ path('comment_add',{postid : post.id}) }}">
+    <button class="btn btn-primary m-2 left-0 position-absolute">
+        Ecrire un commentaire
+    </button>
+</a>
+<div class="w-25 m-auto">
+<article class="card m-2" >
+    <div class="card-body">
+        <h2 class="card-title border-bottom pb-2"> {{post.title}}</h2>
+        <p class="card-text p-2"> {{post.content}}</p>
+        <p class ="infos">
+         Fait par <strong>{{post.user.username}} </strong>
+        le {{post.createdAt|date('d-m-y')}}</p>
+            {% if is_granted('ROLE_USER') and app.user.id == post.user.id %}
+    <div>
+        <a href="{{path('post_edit', {id : post.id})}}"><button class="btn btn-secondary"> Editer </button></a>
+        <a href="{{path('post_delete', {id : post.id})}}"><button class="btn btn-danger"> Supprimer </button></a>
+    </div>
+    {% endif %}
+    </div>
+
+</article>
+
+
+{% for comment in comments %}
+<article class="card m-2 border-secondary">
+    <div class="border-bottom rounded-top">
+        <h4 class="m-3"> {{comment.user.username}} </h4>
+    </div>
+    <div class="p-3">
+        <p> {{ comment.content }} </p>
+    </div>
+    <div class="p-3 d-flex justify-content-between border-top">
+        <p class=""> écrit le <em>{{ comment.createdAt|date('d-m-y') }}</em></p>
+        {% if is_granted('ROLE_USER') and app.user.id == comment.user.id %}
+        <div>
+            <a href="{{path('comment_edit', {id : comment.id})}}">
+                <button class="btn btn-secondary"> Editer </button>
+            </a>
+            <a href="{{path('comment_delete', {id : comment.id})}}">
+                <button class="btn btn-danger"> Supprimer </button>
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</article>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvel Article{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center pb-2">Nouvel Article</h1>
+    {{ include('post/_form.html.twig') }}
+</div>
+{% endblock %}
