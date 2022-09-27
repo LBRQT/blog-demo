@@ -27,12 +27,18 @@ class UserController extends AbstractController
      */
     public function new(Request $request, UserPasswordHasherInterface $passwordHasher, UserRepository $userRepository): Response
     {
+        // On créer un nouvel utilisateur
         $user = new User();
+
+        //Nous appelons le formulaire
         $form = $this->createForm(UserType::class, $user);
         
+        // Ceci est la méthode qui détecte la requête envoyée
         $form->handleRequest($request);
 
+        // On vérifie si le formulaire est valide et bien envoyé
         if ($form->isSubmitted() && $form->isValid()) {
+
             // actuellement le mot de passe n'est pas haché dans le user
             // on récupère le service UserPasswordHasherInterface 
             // pour hasher le mot de passe à la mano
@@ -43,6 +49,7 @@ class UserController extends AbstractController
             // cette méthode fait le persist et le flush !
             $userRepository->add($user, true);
 
+            // On retourne l'utilisateur vers la homepage
             return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
         }
 

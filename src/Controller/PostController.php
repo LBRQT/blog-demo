@@ -86,6 +86,8 @@ class PostController extends AbstractController
         // Check if connected user id correspond to the post user id
         if($user->getId() != $post->getUser()->getId())
         {
+
+            // A 404 page must be configured here
             return dd('404');
         }
 

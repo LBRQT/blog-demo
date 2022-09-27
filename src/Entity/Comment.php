@@ -25,6 +25,7 @@ class Comment
     #[ORM\ManyToOne(inversedBy: 'comments')]
     private ?Post $post = null;
 
+
     public function getId(): ?int
     {
         return $this->id;
