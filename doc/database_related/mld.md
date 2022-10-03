@@ -3,8 +3,8 @@
 ---
 ## Légende
 
-<span style="color:lightgreen"> Table </span>
-<span style="color:lightblue"> Primary Key </span>
+<span style="color:lightgreen"> Table </span> |
+<span style="color:lightblue"> Primary Key </span> |
 <span style="color:pink"> Foreign Key </span>
 
 ---
